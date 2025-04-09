@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>JESP TIME – DELUXE</title>
+  <title>JESP TIME – FINAL DELUXE</title>
   <style>
     body {
       margin: 0;
@@ -21,6 +21,7 @@
       text-align: center;
       font-size: 2.5em;
       z-index: 100;
+      text-shadow: 0 0 10px yellow;
     }
 
     #startIntro {
@@ -57,7 +58,6 @@
       height: 100%;
       overflow: hidden;
       perspective: 400px;
-      display: none;
       z-index: 10;
     }
 
@@ -69,20 +69,22 @@
       font-size: 2em;
       transform-origin: 50% 100%;
       color: yellow;
-    }
-
-    .animate-crawl {
-      animation: crawl 40s linear forwards;
+      opacity: 0;
     }
 
     @keyframes crawl {
       0% {
         bottom: -100%;
         transform: rotateX(20deg) translateZ(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
       }
       100% {
         bottom: 100%;
         transform: rotateX(25deg) translateZ(-500px);
+        opacity: 0;
       }
     }
 
@@ -120,20 +122,20 @@
 </head>
 <body>
 
-  <!-- COUNTDOWN -->
+  <!-- Nedräkning -->
   <div id="countdown"></div>
 
-  <!-- START INTRO BUTTON -->
+  <!-- Startknapp -->
   <div id="startIntro">
     <button onclick="startIntro()">May the JESP be with you</button>
   </div>
 
-  <!-- CRAWL EFFECT -->
+  <!-- Crawl -->
   <div id="crawl-wrapper">
     <div id="crawl">
       <p>A long time ago, in a Cepheid far, far away...</p>
       <p>There was unrest in the lab.</p>
-      <p>Pipettes trembling and suggestions ignored.</p>
+      <p>Pipettes trembling. Suggestions ignored.</p>
       <p>But from the silence...</p>
       <p>One voice returned.</p>
       <p>THIS... IS...</p>
@@ -141,7 +143,7 @@
     </div>
   </div>
 
-  <!-- SOUNDBOARD -->
+  <!-- Soundboard -->
   <div id="soundboard">
     <button class="sound-button" onclick="playSound('fraga1.mp3')">Advice 1</button>
     <button class="sound-button" onclick="playSound('fraga2.mp3')">Advice 2</button>
@@ -149,12 +151,11 @@
     <button class="sound-button" onclick="playSound('do_it.mp3')">Advice 4</button>
   </div>
 
-  <!-- AUDIO -->
+  <!-- Ljud -->
   <audio id="bgMusic" src="static/sounds/starwars_theme.mp3"></audio>
   <audio id="soundPlayer"></audio>
 
   <script>
-    // COUNTDOWN
     const countdownElement = document.getElementById("countdown");
     const targetDate = new Date("2025-05-01T00:00:00").getTime();
 
@@ -163,7 +164,7 @@
       const distance = targetDate - now;
 
       if (distance < 0) {
-        countdownElement.innerHTML = "JESP TIME!";
+        countdownElement.innerHTML = "🎉 JESP TIME!";
         clearInterval(timerInterval);
         return;
       }
@@ -179,25 +180,26 @@
     const timerInterval = setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // SOUNDBOARD
     function playSound(file) {
       const sound = document.getElementById("soundPlayer");
       sound.src = `static/sounds/${file}`;
       sound.play();
     }
 
-    // INTRO + MUSIC
     function startIntro() {
+      // Dölj knappen
       document.getElementById("startIntro").style.display = "none";
 
-      const crawl = document.getElementById("crawl");
-      const wrapper = document.getElementById("crawl-wrapper");
-
-      wrapper.style.display = "block";
-      crawl.classList.add("animate-crawl");
-
+      // Starta musik
       const bgMusic = document.getElementById("bgMusic");
       bgMusic.play();
+
+      // Starta crawl
+      const crawl = document.getElementById("crawl");
+      crawl.style.animation = "none";
+      crawl.offsetHeight; // force reflow
+      crawl.style.animation = "crawl 40s linear forwards";
+      crawl.style.opacity = "1";
     }
   </script>
 
