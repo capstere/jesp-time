@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>JESP TIME</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("static/images/background.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: yellow;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    #countdown {
+      position: absolute;
+      top: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 2.5em;
+      z-index: 100;
+    }
+
+    #crawl-container {
+      position: absolute;
+      bottom: -100%;
+      width: 100%;
+      perspective: 400px;
+    }
+
+    #crawl-content {
+      font-size: 2em;
+      text-align: center;
+      transform-origin: 50% 100%;
+      animation: crawl 30s linear forwards;
+    }
+
+    @keyframes crawl {
+      0% {
+        bottom: -100%;
+        transform: rotateX(20deg) translateZ(0);
+      }
+      100% {
+        bottom: 100%;
+        transform: rotateX(25deg) translateZ(-500px);
+      }
+    }
+
+    #soundboard {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .sound-button {
+      background: yellow;
+      color: black;
+      border: none;
+      padding: 15px 25px;
+      margin: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .sound-button:hover {
+      transform: scale(1.1);
+      background: white;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="countdown"></div>
+
+  <div id="crawl-container">
+    <div id="crawl-content">
+      <p>A long time ago, in a Cepheid far, far away...</p>
+      <p>There was unrest in the lab. Pipettes trembling and suggestions ignored.</p>
+      <p>From the data sheets, one voice returned.</p>
+      <p>THIS... IS...</p>
+      <p>THE RETURN OF THE JESP.</p>
+    </div>
+  </div>
+
+  <div id="soundboard">
+    <button class="sound-button" onclick="playSound('fraga1.mp3')">JESP returns?</button>
+    <button class="sound-button" onclick="playSound('fraga2.mp3')">Train again?!</button>
+    <button class="sound-button" onclick="playSound('fraga3.mp3')">Whiteboard whisper</button>
+    <button class="sound-button" onclick="playSound('do_it.mp3')">DO IT</button>
+  </div>
+
+  <audio id="bgMusic" src="static/sounds/starwars_theme.mp3" autoplay loop></audio>
+  <audio id="soundPlayer"></audio>
+
+  <script>
+    const countdownElement = document.getElementById("countdown");
+    const targetDate = new Date("2025-04-30T00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        countdownElement.innerHTML = "JESP TIME!";
+        clearInterval(timerInterval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    const timerInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function playSound(file) {
+      const sound = document.getElementById("soundPlayer");
+      sound.src = `static/sounds/${file}`;
+      sound.play();
+    }
+  </script>
+</body>
+</html>
