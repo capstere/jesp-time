@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>JESP TIME – FINAL DELUXE</title>
+  <title>JESP TIME – FINAL-FINAL-FIXED™</title>
   <style>
     body {
       margin: 0;
@@ -153,7 +153,7 @@
 
   <!-- Ljud -->
   <audio id="bgMusic" src="static/sounds/starwars_theme.mp3"></audio>
-  <audio id="soundPlayer"></audio>
+  <audio id="soundPlayer" src=""></audio>
 
   <script>
     const countdownElement = document.getElementById("countdown");
@@ -187,19 +187,14 @@
     }
 
     function startIntro() {
-      // Dölj knappen
       document.getElementById("startIntro").style.display = "none";
-
-      // Starta musik
-      const bgMusic = document.getElementById("bgMusic");
-      bgMusic.play();
-
-      // Starta crawl
       const crawl = document.getElementById("crawl");
       crawl.style.animation = "none";
-      crawl.offsetHeight; // force reflow
+      crawl.offsetHeight; // Reflow
       crawl.style.animation = "crawl 40s linear forwards";
       crawl.style.opacity = "1";
+      const bgMusic = document.getElementById("bgMusic");
+      bgMusic.play();
     }
   </script>
 
