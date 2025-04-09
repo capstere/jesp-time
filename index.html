@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>JESP TIME – FINAL-FINAL-FIXED™</title>
+  <title>JESP TIME – FINAL v3</title>
   <style>
     body {
       margin: 0;
@@ -182,7 +182,10 @@
 
     function playSound(file) {
       const sound = document.getElementById("soundPlayer");
+      sound.pause();
+      sound.currentTime = 0;
       sound.src = `static/sounds/${file}`;
+      sound.load();
       sound.play();
     }
 
@@ -190,7 +193,7 @@
       document.getElementById("startIntro").style.display = "none";
       const crawl = document.getElementById("crawl");
       crawl.style.animation = "none";
-      crawl.offsetHeight; // Reflow
+      crawl.offsetHeight; // Force reflow
       crawl.style.animation = "crawl 40s linear forwards";
       crawl.style.opacity = "1";
       const bgMusic = document.getElementById("bgMusic");
