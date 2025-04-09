@@ -98,7 +98,7 @@
     <button class="sound-button" onclick="playSound('do_it.mp3')">DO IT</button>
   </div>
 
-  <audio id="bgMusic" src="static/sounds/starwars_theme.mp3" autoplay loop></audio>
+  <audio id="bgMusic" src="static/sound/starwars_theme.mp3" autoplay loop></audio>
   <audio id="soundPlayer"></audio>
 
   <script>
@@ -128,7 +128,7 @@
 
     function playSound(file) {
       const sound = document.getElementById("soundPlayer");
-      sound.src = `static/sounds/${file}`;
+      sound.src = `static/sound/${file}`;
       sound.play();
     }
   </script>
