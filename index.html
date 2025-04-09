@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>JESP TIME – FINAL v3</title>
+  <title>JESP TIME</title>
   <style>
     body {
       margin: 0;
@@ -122,15 +122,12 @@
 </head>
 <body>
 
-  <!-- Nedräkning -->
   <div id="countdown"></div>
 
-  <!-- Startknapp -->
   <div id="startIntro">
     <button onclick="startIntro()">May the JESP be with you</button>
   </div>
 
-  <!-- Crawl -->
   <div id="crawl-wrapper">
     <div id="crawl">
       <p>A long time ago, in a Cepheid far, far away...</p>
@@ -143,7 +140,6 @@
     </div>
   </div>
 
-  <!-- Soundboard -->
   <div id="soundboard">
     <button class="sound-button" onclick="playSound('fraga1.mp3')">Advice 1</button>
     <button class="sound-button" onclick="playSound('fraga2.mp3')">Advice 2</button>
@@ -151,9 +147,8 @@
     <button class="sound-button" onclick="playSound('do_it.mp3')">Advice 4</button>
   </div>
 
-  <!-- Ljud -->
   <audio id="bgMusic" src="static/sounds/starwars_theme.mp3"></audio>
-  <audio id="soundPlayer" src=""></audio>
+  <audio id="soundPlayer"></audio>
 
   <script>
     const countdownElement = document.getElementById("countdown");
@@ -186,18 +181,18 @@
       sound.currentTime = 0;
       sound.src = `static/sounds/${file}`;
       sound.load();
-      sound.play();
+      sound.play().catch(e => console.log("Ljudfel:", e));
     }
 
     function startIntro() {
       document.getElementById("startIntro").style.display = "none";
       const crawl = document.getElementById("crawl");
       crawl.style.animation = "none";
-      crawl.offsetHeight; // Force reflow
+      crawl.offsetHeight;
       crawl.style.animation = "crawl 40s linear forwards";
       crawl.style.opacity = "1";
       const bgMusic = document.getElementById("bgMusic");
-      bgMusic.play();
+      bgMusic.play().catch(e => console.log("Musikfel:", e));
     }
   </script>
 
